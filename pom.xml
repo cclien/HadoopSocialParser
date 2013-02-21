@@ -3,4 +3,57 @@
   <groupId>dsl</groupId>
   <artifactId>socialparser-hadoop</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-my-jar-with-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+   </build>
+  
+  <dependencies>
+  	<dependency>
+	  <groupId>com.restfb</groupId>
+	  <artifactId>restfb</artifactId>
+	  <version>1.6.9</version>
+	</dependency>
+  	<dependency>
+  		<groupId>org.apache.hadoop</groupId>
+  		<artifactId>hadoop-core</artifactId>
+  		<version>0.20.2-cdh3u4</version>
+  		<scope>provided</scope>
+  	</dependency>
+  </dependencies>
+  <repositories>
+   <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <url>http://repo1.maven.org/maven2</url>
+    </repository>
+  	<repository>
+  	  <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>cdh</id>
+      <name>Cloudera CDH3</name>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+  	</repository>
+  </repositories>
 </project>

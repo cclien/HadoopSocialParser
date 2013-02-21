@@ -17,18 +17,24 @@ public class PackSequenceFile {
 
 		if(args.length < 2) {
 			System.err.println("PackSequenceFile - Convert local JSON files into a Hadoop Sequence File");
-			System.err.println("usage: PackSequenceFile <inputdir> <SequenceFilePath>");
+			System.err.println("usage: PackSequenceFile <local inputdir> <hdfs SequenceFile path>");
 			
 			System.exit(1);
 		}
 		
 		String inputDir = args[0];
 		String outputPath = args[1];
-		
+		Path outFile = new Path(outputPath);
+				
 		Configuration conf = new Configuration();
 		
-		FileSystem fs = FileSystem.getLocal(conf);
-		Writer w = new Writer(fs, conf, new Path(outputPath), Text.class, Text.class);
+		FileSystem fs = FileSystem.get(conf);
+		if (fs.exists(outFile)) {
+			System.out.println("Output file already exist");
+			System.exit(1);
+		}
+		
+		Writer w = new Writer(fs, conf, outFile, Text.class, Text.class);
 
 		File inputFolder = new File(inputDir);
 		

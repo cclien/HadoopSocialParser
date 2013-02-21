@@ -1,6 +1,8 @@
 package dsl.socialparser.hadoop;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -35,9 +37,10 @@ public class Argument {
 			// anyway, get something from the post
 			String mesg=null;
 			Post post = p.getPost();			
+			SimpleDateFormat ISO8601DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.UK);
 			if(post != null) {
 				try {
-					String time = post.getCreatedTime().toString();
+					String time = ISO8601DATEFORMAT.format(post.getCreatedTime());
 					int len=0;
 					if(post.getMessage() != null)
 						len = post.getMessage().length();
@@ -56,7 +59,7 @@ public class Argument {
 					
 					for(CrawledComment c:p.getComments()) {
 						Comment comment = c.getComment();
-						time = comment.getCreatedTime().toString();
+						time = ISO8601DATEFORMAT.format(post.getCreatedTime());
 						len=0;
 						if(comment.getMessage() != null)
 							len = comment.getMessage().length();
